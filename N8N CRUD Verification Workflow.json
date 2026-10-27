@@ -1,0 +1,149 @@
+{
+  "name": "N8N CRUD Verification Workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -304,
+        -16
+      ],
+      "id": "585dd40a-1baf-4f27-973e-580a3f141054",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://reqres.in/api/users",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "page",
+              "value": "2"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        -80,
+        -16
+      ],
+      "id": "797316c1-ce6f-46cc-b74a-630da673a75b",
+      "name": "HTTP_GET_Users"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://reqres.in/api/users",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "\n{\n  \"name\": \"Alice Smith\",\n  \"job\": \"Software Engineer\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        144,
+        -16
+      ],
+      "id": "c2e3529d-d1d9-433f-a129-8f4f506a92bb",
+      "name": "HTTP_POST_CreateUser"
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "https://reqres.in/api/users/26",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "=\n{\n  \"name\": \"Alice Smith\",\n  \"job\": \"Senior Software Engineer\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        368,
+        -16
+      ],
+      "id": "1727a9d7-c94a-4958-a3d7-04909ca0c844",
+      "name": "HTTP_PUT_UpdateUser"
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "https://reqres.in/api/users/26",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        592,
+        -16
+      ],
+      "id": "11c4ccf3-453d-47aa-b8c7-68e073fef206",
+      "name": "HTTP_DELETE_DeleteUser"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP_GET_Users",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP_GET_Users": {
+      "main": [
+        [
+          {
+            "node": "HTTP_POST_CreateUser",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP_POST_CreateUser": {
+      "main": [
+        [
+          {
+            "node": "HTTP_PUT_UpdateUser",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP_PUT_UpdateUser": {
+      "main": [
+        [
+          {
+            "node": "HTTP_DELETE_DeleteUser",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "12a54617-1500-45f2-89f7-bafa04c34d39",
+  "meta": {
+    "instanceId": "a03c7678428ef19ededbf912f16f7d5798ec7b9ab4c17f2a2def6a9e791e7215"
+  },
+  "nodeGroups": [],
+  "id": "lJbPzeqo3Aj1Y8R9",
+  "tags": []
+}
